@@ -5,20 +5,26 @@ app = Flask(__name__)
 
 def format_date(date):
     return date.strftime("%B %d, %Y")
-today=date.today()
-
+def mistakes():
+        return'You must include proper data in each section, press to go back. <a href="/"> go back </a>'
 @app.route("/")
 def home():
     return render_template("index.html")
 
 @app.route("/result", methods=["POST"])
 def answers():
-    cutoff = request.form["cutoff"]
-    grace = int(request.form["grace"])
-        
-        
+    today=date.today()
 
-    cutoff_date = datetime.strptime(cutoff, "%Y-%m-%d").date()
+    cutoff = request.form["cutoff"]
+    try:
+        grace = int(request.form["grace"])
+        cutoff_date = datetime.strptime(cutoff, "%Y-%m-%d").date()
+
+    except ValueError:
+        response=mistakes()
+        return response
+
+    ###
     pre_date= cutoff_date - relativedelta(months=1)
     
     first_payment = cutoff_date + timedelta(days=grace)
