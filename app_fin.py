@@ -38,7 +38,20 @@ def answers():
     return render_template("new_index.html", cutoff_date=box[0], pre_date=box[1], first_payment=box[2], next_cutoff=box[3], second_payment=box[4], time_left=time_left)
 
 
+@app.route("/principal", methods=["GET", "POST"])
+def compute():
+    if request.method=="GET":
+          return render_template("computing_index.html")
+    anual_income=int(request.form["anual_income"])
+    current_savings=int(request.form["current_savings"])
+    fixed_expenses=int(request.form["fixed_expenses"])
+    goal_cost=int(request.form["goal_cost"])
+    monthly_income=round(anual_income/12)
+    real_goal=goal_cost-current_savings
 
+
+     
+     
 
             
 if __name__ == "__main__":
