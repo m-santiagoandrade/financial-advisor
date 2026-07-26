@@ -5,8 +5,8 @@ app = Flask(__name__)
 
 def format_date(date):
     return date.strftime("%B %d, %Y")
-def mistakes():
-        return'You must include proper data in each section, press to go back. <a href="/"> go back </a>'
+def mistakes(route):
+        return f'You must include proper data in each section, press to go back. <a href="{route}"> go back </a>'
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -21,7 +21,7 @@ def answers():
         cutoff_date = datetime.strptime(cutoff, "%Y-%m-%d").date()
 
     except ValueError:
-        response=mistakes()
+        response=mistakes("/")
         return response
 
     ###
@@ -42,14 +42,23 @@ def answers():
 def compute():
     if request.method=="GET":
           return render_template("computing_index.html")
-    anual_income=int(request.form["anual_income"])
-    current_savings=int(request.form["current_savings"])
-    fixed_expenses=int(request.form["fixed_expenses"])
-    goal_cost=int(request.form["goal_cost"])
-    monthly_income=round(anual_income/12)
-    real_goal=goal_cost-current_savings
-
-
+    try:
+        anual_income=int(request.form["anual_income"])
+        current_savings=int(request.form["current_savings"])
+        fixed_expenses=int(request.form["fixed_expenses"])
+        goal_cost=int(request.form["goal_cost"])
+        percentage=(100-(int(request.form["percentage"])))/100
+        monthly_income=round(anual_income/12) # monthly_income is fixed_expenses and money to hangout
+        real_monthly_income=round((monthly_income-fixed_expenses)*percentage)
+        real_goal=goal_cost-current_savings
+        time_to_afford=round(real_goal/real_monthly_income)
+        years_to_afford=int(time_to_afford//12)
+        months_to_afford=int(time_to_afford%12)
+        free_money=round(monthly_income-real_monthly_income)
+    except ValueError:
+         response=mistakes("/principal")
+         return response
+    return render_template("description_index.html",time_to_afford=time_to_afford, real_monthly_income=real_monthly_income, monthly_income=monthly_income, free_money=free_money, years_to_afford=years_to_afford, months_to_afford=months_to_afford  )
      
      
 
