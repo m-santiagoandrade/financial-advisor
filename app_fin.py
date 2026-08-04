@@ -24,7 +24,6 @@ def answers():
         response=mistakes("/")
         return response
 
-    ###
     pre_date= cutoff_date - relativedelta(months=1)
     
     first_payment = cutoff_date + timedelta(days=grace)
@@ -49,16 +48,17 @@ def compute():
         goal_cost=int(request.form["goal_cost"])
         percentage=(100-(int(request.form["percentage"])))/100
         monthly_income=round(anual_income/12) # monthly_income is fixed_expenses and money to hangout
-        real_monthly_income=round((monthly_income-fixed_expenses)*percentage)
+        real_monthly_income=monthly_income-fixed_expenses
+        amount_to_save=round((real_monthly_income)*percentage) 
         real_goal=goal_cost-current_savings
-        time_to_afford=round(real_goal/real_monthly_income)
+        time_to_afford=round(real_goal/amount_to_save)
         years_to_afford=int(time_to_afford//12)
         months_to_afford=int(time_to_afford%12)
-        free_money=round(monthly_income-real_monthly_income)
+        spendable_money=round(real_monthly_income-amount_to_save)
     except ValueError:
          response=mistakes("/principal")
          return response
-    return render_template("description_index.html",time_to_afford=time_to_afford, real_monthly_income=real_monthly_income, monthly_income=monthly_income, free_money=free_money, years_to_afford=years_to_afford, months_to_afford=months_to_afford  )
+    return render_template("description_index.html",time_to_afford=time_to_afford, amount_to_save=amount_to_save, monthly_income=monthly_income, spendable_money=spendable_money, years_to_afford=years_to_afford, months_to_afford=months_to_afford  )
      
      
 
@@ -66,5 +66,3 @@ def compute():
 if __name__ == "__main__":
     app.run(debug=True)
 
-#2026-07-20
-# timedelta(days=20)
