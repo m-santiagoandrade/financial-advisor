@@ -7,8 +7,8 @@ def format_date(date):
     return date.strftime("%B %d, %Y")
 def mistakes(route):
         return f'You must include proper data in each section, press to go back. <a href="{route}"> go back </a>'
-@app.route("/")
-def home():
+@app.route("/cutoff")
+def start():
     return render_template("index.html")
 
 @app.route("/result", methods=["POST"])
@@ -21,7 +21,7 @@ def answers():
         cutoff_date = datetime.strptime(cutoff, "%Y-%m-%d").date()
 
     except ValueError:
-        response=mistakes("/")
+        response=mistakes("/cutoff") #calls function to return an error message
         return response
 
     pre_date= cutoff_date - relativedelta(months=1)
@@ -35,6 +35,10 @@ def answers():
         box[i]=format_date(box[i])
     
     return render_template("new_index.html", cutoff_date=box[0], pre_date=box[1], first_payment=box[2], next_cutoff=box[3], second_payment=box[4], time_left=time_left)
+
+@app.route("/")
+def home():
+     return render_template("home_screen.html")
 
 
 @app.route("/principal", methods=["GET", "POST"])
