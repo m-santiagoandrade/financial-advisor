@@ -4,9 +4,26 @@ from dateutil.relativedelta import relativedelta
 app = Flask(__name__)
 
 def format_date(date):
+
+    months = {
+        "January": "enero",
+        "February": "febrero",
+        "March": "marzo",
+        "April": "abril",
+        "May": "mayo",
+        "June": "junio",
+        "July": "julio",
+        "August": "agosto",
+        "September": "septiembre",
+        "October": "octubre",
+        "November": "noviembre",
+        "December": "diciembre"}
+    month=date.strftime("%B")
+    return f"{date.day} de {months[month]} de {date.year}"
+
     return date.strftime("%B %d, %Y")
 def mistakes(route):
-        return f'Debes ingresar datos válidos en cada sección. Presiona para volver. <a href="{route}"> go back </a>'
+        return f'Debes ingresar datos válidos en cada sección. <a href="{route}"> Presiona para volver </a>'
 @app.route("/cutoff")
 def start():
     return render_template("index.html")
