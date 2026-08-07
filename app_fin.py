@@ -6,7 +6,7 @@ app = Flask(__name__)
 def format_date(date):
     return date.strftime("%B %d, %Y")
 def mistakes(route):
-        return f'You must include proper data in each section, press to go back. <a href="{route}"> go back </a>'
+        return f'Debes ingresar datos válidos en cada sección. Presiona para volver. <a href="{route}"> go back </a>'
 @app.route("/cutoff")
 def start():
     return render_template("index.html")
@@ -29,7 +29,11 @@ def answers():
     first_payment = cutoff_date + timedelta(days=grace)
     next_cutoff = cutoff_date + relativedelta(months=1)
     second_payment = first_payment + relativedelta(months=1)
-    time_left=(first_payment-today).days
+    #ya paso el corte
+    if today<cutoff_date:
+        time_left=(first_payment-today).days
+    else:
+         time_left=(second_payment-today).days
     box=[cutoff_date, pre_date, first_payment, next_cutoff, second_payment]
     for i in range(0, len(box)):
         box[i]=format_date(box[i])
