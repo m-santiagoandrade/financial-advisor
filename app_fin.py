@@ -21,7 +21,6 @@ def format_date(date):
     month=date.strftime("%B")
     return f"{date.day} de {months[month]} de {date.year}"
 
-    return date.strftime("%B %d, %Y")
 def mistakes(route):
         return f'Debes ingresar datos válidos en cada sección. <a href="{route}"> Presiona para volver </a>'
 @app.route("/cutoff")
