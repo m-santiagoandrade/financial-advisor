@@ -11,6 +11,7 @@ Personal finance web app that helps you make better financial decisions, coverin
 - Python
 - Flask
 - HTML
+- CSS
 
 ## Status
 Work in progress
