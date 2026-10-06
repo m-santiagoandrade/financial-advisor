@@ -1,20 +1,41 @@
-body{
+    body{
         color: #1F2937;
         background-color: #F4F7F9;
-        text-align: center;
+        text-align: left;
 
       }
-.links a{
+    .links a{
         font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         color: #16875D;
         border: 3px double;
-        display:inline-block;
         padding: 12px 20px;
         border-radius: 6px;
-        }
-.principal{
+    }
+    .links{
+        text-align:center;
+    }
+    .principal{
         color: black;
         background-color: #DFF3E4;
         display: inline-block;
         border: 5px double #16875D;
-          }
+        text-align: center;
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+    }
+    .button{
+        text-align: center;
+    }
+    .button button{
+        font-size: 18px;
+        color: black;
+        border-top-color: #16875D;
+        display:inline-block;
+        padding: 5px 7px;
+        width: 200px;
+        border: 10px solid #16875D;
+        box-shadow: -6px 6px 5px black;
+
+    }
+        
