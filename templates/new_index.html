@@ -4,24 +4,27 @@
 <head>
 
 <title>Asesor Financiero</title>
+<link rel="stylesheet" href="/static/style.css">
 
 </head>
 <body>
+<div class="principal">
 <h1>Calculadora de Fecha de Corte</h1>
-<p>En esta calculadora, al ingresar la fecha de corte de tu tarjeta de crédito, te diremos cuál es el mejor momento para realizar tus compras y aprovechar al máximo tu dinero.</p>
+</div>
+<br>
+<p>Lo que gastes entre {{pre_date}} y {{cutoff_date}}
+se cobrará el {{first_payment}}. Si realizaras una compra hoy, tendrías {{time_left}} días para pagarla.
 
-<p>Lo que gastes entre {{pre_date}} y {{cutoff_date}}</p>
+Lo que gastes entre {{cutoff_date}} y {{next_cutoff}}
 
-<p>se cobrará el {{first_payment}}. Si realizaras una compra hoy, tendrías {{time_left}} días para pagarla.</p>
+se cobrará el {{second_payment}}.</p><br><br>
+<br><br>
+<p class="links"><a href="https://shorturl.at/1s1rZ">Por favor, cuando pruebes todas nuestras páginas, déjanos tu opinión aqui.</a></p>
+<br><br>
 
-<p>Lo que gastes entre {{cutoff_date}} y {{next_cutoff}}</p>
-
-<p>se cobrará el {{second_payment}}.</p><br><br>
-
-<a href="https://shorturl.at/1s1rZ">Por favor, cuando pruebes todas nuestras páginas, déjanos tu opinión aqui.</a><br><br>
-
-<a href="/cutoff">Volver</a><br><br>
-<a href="/">Ir al inicio</a>
+<p class="links"><a href="/cutoff">Volver</a></p>
+<br><br>
+<p class="links"><a href="/">Ir al inicio</a></p>
 
 </body>
 
