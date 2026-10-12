@@ -12,11 +12,15 @@
 <h3>Resultados en base a tu situacion financiera</h3>
 </div>
 <br><br>
- <p>Para poder alcanzar tu meta, maximizando tus ahorros,</p>
- <p>necesitarás ahorrar durante aproximadamente {{years_to_afford}} años y {{months_to_afford}} meses.</p>
- <p>De todos tus ingresos, tendrás disponibles cada mes: {{spendable_money}}$.</p>
- <p>Y necesitarás ahorrar aproximadamente {{amount_to_save}}$ al mes.</p>
-
+<p>Para poder alcanzar tu meta, maximizando tus ahorros,</p>
+<p>necesitarás ahorrar durante aproximadamente {{years_to_afford}} años y {{months_to_afford}} meses.</p>
+<p>De todos tus ingresos, tendrás disponibles cada mes: {{spendable_money}}$.</p>
+<p>Y necesitarás ahorrar aproximadamente {{amount_to_save}}$ al mes.</p>
+{% if p %}
+    <p>Para alcanzar tu meta mensual de ahorro llevando a cabo las instrucciones, aún necesitas cubrir: ${{x}}.</p>
+{% else %}
+    <p>El monto que tendras disponible llevando a cabo las instrucciones por encima de tu meta es de ${{x}}.</p>
+{% endif %}
 <br><br>
 
 <p class="links"><a href="https://shorturl.at/1s1rZ">Por favor, cuando pruebes todas nuestras páginas, déjanos tu opinión aqui.</a></p>
@@ -29,3 +33,4 @@
 </body>
 
 </html>
+
