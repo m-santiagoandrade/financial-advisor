@@ -22,7 +22,7 @@ def format_date(date):
     return f"{date.day} de {months[month]} de {date.year}"
 
 def mistakes(route):
-        return f'Debes ingresar datos válidos en cada sección. <a href="{route}"> Presiona para volver </a>'
+        return f'No es posible calcular tu meta con los datos ingresados. Algunos valores son negativos o no son compatibles con tu situación financiera. Por favor, revisa tus ingresos, gastos y el monto de tu meta e inténtalo de nuevo.. <a href="{route}"> Presiona para volver </a>'
 @app.route("/cutoff")
 def start():
     return render_template("index.html")
@@ -45,7 +45,7 @@ def answers():
     first_payment = cutoff_date + timedelta(days=grace)
     next_cutoff = cutoff_date + relativedelta(months=1)
     second_payment = first_payment + relativedelta(months=1)
-    #ya paso el corte
+    #The statement closing date has passed
     if today<cutoff_date:
         time_left=(first_payment-today).days
     else:
@@ -60,9 +60,13 @@ def answers():
 def home():
      return render_template("home_screen.html")
 
-
+def remaining_or_exceedent(amount, months, years): 
+     return amount*(months+years*12)
 @app.route("/principal", methods=["GET", "POST"])
 def compute():
+    remaining_amount=0
+    excedent=0
+    p=True
     if request.method=="GET":
           return render_template("computing_index.html")
     try:
@@ -79,11 +83,26 @@ def compute():
         years_to_afford=int(time_to_afford//12)
         months_to_afford=int(time_to_afford%12)
         spendable_money=round(real_monthly_income-amount_to_save)
+        if time_to_afford<0 or amount_to_save<0 or spendable_money<0 or years_to_afford<0 or months_to_afford<0:
+                     return (mistakes("/principal"))
+        elif (remaining_or_exceedent(amount_to_save, months_to_afford, years_to_afford))<real_goal:
+            remaining_amount=real_goal-(remaining_or_exceedent(amount_to_save, months_to_afford, years_to_afford))
+            return description(time_to_afford, amount_to_save, spendable_money, years_to_afford, months_to_afford, remaining_amount, p)
+        else:
+            excedent= remaining_or_exceedent(amount_to_save, months_to_afford, years_to_afford)-real_goal
+            p=False    
+            return description(time_to_afford, amount_to_save, spendable_money, years_to_afford, months_to_afford, excedent, p )
+
     except ValueError:
-         response=mistakes("/principal")
-         return response
-    return render_template("description_index.html",time_to_afford=time_to_afford, amount_to_save=amount_to_save, monthly_income=monthly_income, spendable_money=spendable_money, years_to_afford=years_to_afford, months_to_afford=months_to_afford  )
-     
+        return (mistakes("/principal"))
+
+def description(time_to_afford, amount_to_save, spendable_money, years_to_afford, months_to_afford, x,p): # x as remaining or excedent
+         return render_template("description_index.html", time_to_afford=time_to_afford, amount_to_save=amount_to_save, spendable_money=spendable_money, years_to_afford=years_to_afford, months_to_afford=months_to_afford, x=x, p=p)
+            
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
+
+
      
 
             
